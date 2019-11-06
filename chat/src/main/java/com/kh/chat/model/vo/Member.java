@@ -1,5 +1,7 @@
 package com.kh.chat.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +13,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Chat {
-	
-	private int cl_no;
+public class Member {
+
 	private int m_no;
-	private String team;
-	private String talk_table;
-	
+	private String id;
+	private String pass;
 }
