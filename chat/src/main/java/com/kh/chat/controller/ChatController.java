@@ -47,13 +47,13 @@ public class ChatController {
 	public String loginUser(Member m) {
 		
 		Member mem = cService.login(m);
-		
+		System.out.println(mem);
 		if(mem!=null) {
-			
+			return "mainPage";
 		}else {
+			return "";
 			
 		}
-		return "";
 	}
 	
 	
