@@ -1,0 +1,23 @@
+create table member(
+    m_no number primary key,
+    id varchar2(100) not null,
+    pass varchar2(100) not null
+);
+create sequence seq_member;
+
+create table chatlist(
+    cl_no number primary key,
+    m_no number references member,
+    team varchar2(1000),
+    talk_table varchar2(100)
+);
+create sequence seq_chatlist;
+
+create table chattalk(
+	ct_no number primary key,
+	cl_no number references chatlist,
+	writer varchar2(100),
+	writer_time date,
+	content varchar2(4000)
+);
+create sequence seq_chattalk;
