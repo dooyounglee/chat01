@@ -15,5 +15,7 @@
 		<button type="submit">로그인</button>
 		<button type="reset">취소</button>
 	</form>
+	
+	<button onclick="location.href='join.do'">가입</button>
 </body>
 </html>
