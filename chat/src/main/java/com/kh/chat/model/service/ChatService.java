@@ -1,5 +1,10 @@
 package com.kh.chat.model.service;
 
-public interface ChatService {
+import com.kh.chat.model.vo.Member;
 
+public interface ChatService {
+	
+	Member login(Member m);
+	
+	
 }
