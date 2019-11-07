@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+${cookie }
+<form action="logout.do" method="post">
+	<button>로그아웃</button>
+</form>
 </body>
 </html>

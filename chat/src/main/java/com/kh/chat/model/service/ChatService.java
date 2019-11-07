@@ -7,6 +7,8 @@ public interface ChatService {
 	Member login(Member m);
 
 	int join(Member m);
+
+	Member getMember(Member m);
 	
 	
 }

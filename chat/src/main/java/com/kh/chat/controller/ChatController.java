@@ -1,5 +1,8 @@
 package com.kh.chat.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,20 @@ public class ChatController {
 	private ChatService cService;
 	
 	@RequestMapping("/")
-	public ModelAndView loginUser(Member m,ModelAndView mv) {
+	public ModelAndView loginUser(ModelAndView mv,HttpServletRequest req, HttpSession session) {
 		
+		Cookie[] cookies=req.getCookies();
+		if(cookies!=null) {
+			for(Cookie c:cookies) {
+				if(c.getName().equals("idid")) {
+					Member m=new Member();
+					m.setId(c.getValue());
+					session.setAttribute("mem", cService.getMember(m));
+					mv.setViewName("mainPage");
+					return mv;
+				}
+			}
+		}
 		mv.setViewName("index");
 		return mv;
 	}
@@ -35,7 +50,6 @@ public class ChatController {
 	@PostMapping("/join.do")
 	public ModelAndView joinPost(Member m,ModelAndView mv) {
 		
-		System.out.println(m);
 		int result=cService.join(m);
 		if(result>0) {
 			mv.setViewName("index");
@@ -46,16 +60,39 @@ public class ChatController {
 	}
 	
 	@RequestMapping("login.do")
-	public String loginUser(Member m, HttpSession session) {
+	public String loginUser(Member m, HttpSession session, String remember, HttpServletResponse res) {
 		
 		Member mem = cService.login(m);
 		if(mem!=null) {
 			session.setAttribute("mem", mem);
+			if(remember!=null) {
+				Cookie cookie=new Cookie("idid", mem.getId());
+				cookie.setMaxAge(60*60*24*7);
+				cookie.setPath("/");
+				res.addCookie(cookie);
+			}
 			return "mainPage";
 		}else {
 			return "";
-			
 		}
+	}
+	
+	@PostMapping("logout.do")
+	public String logout(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+		
+		session.invalidate();
+		Cookie[] cookies=req.getCookies();
+		if(cookies!=null) {
+			for(Cookie c:cookies) {
+				if(c.getName().equals("idid")) {
+					c.setMaxAge(0);
+					c.setPath("/");
+					res.addCookie(c);
+					break;
+				}
+			}
+		}
+		return "redirect:/";
 	}
 	
 	

@@ -21,5 +21,10 @@ public class ChatServiceImpl implements ChatService{
 	public int join(Member m) {
 		return cDao.join(m);
 	}
+
+	@Override
+	public Member getMember(Member m) {
+		return cDao.getMember(m);
+	}
 	
 }

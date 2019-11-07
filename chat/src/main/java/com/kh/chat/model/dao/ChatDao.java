@@ -20,4 +20,8 @@ public class ChatDao {
 		return sqlSession.insert("chatMapper.join", m);
 	}
 
+	public Member getMember(Member m) {
+		return sqlSession.selectOne("chatMapper.getMember", m);
+	}
+
 }
